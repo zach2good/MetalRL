@@ -2,6 +2,9 @@
 
 #include "common.h"
 
+class Actor;
+class Map;
+
 class Engine
 {
 public:
@@ -13,6 +16,7 @@ public:
     inline bool isWindowClosed() { return TCODConsole::isWindowClosed(); }
 
 private:
-    int x;
-    int y;
+    TCODList<std::shared_ptr<Actor>> actors;
+    std::shared_ptr<Actor> player;
+    std::shared_ptr<Map> map;
 };

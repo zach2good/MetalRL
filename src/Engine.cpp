@@ -1,15 +1,20 @@
 #include "Engine.h"
+
 #include "version.h"
 #include "SDL.h"
+#include "Actor.h"
+#include "Map.h"
 
 Engine::Engine()
 {
     // Force shut-off SDL Logging
-    SDL_LogSetOutputFunction([](void *, int, SDL_LogPriority,const char*){}, nullptr);
+    SDL_LogSetOutputFunction([](void *, int, SDL_LogPriority, const char*){}, nullptr);
 
     TCODConsole::initRoot(100, 60, "MetalRL", false);
-    x = 15;
-    y = 15;
+    player = std::make_shared<Actor>(15, 15, '@', TCODColor::yellow);
+    actors.push(player);
+
+    map = std::make_shared<Map>(100, 60);
 }
 
 Engine::~Engine() = default;
@@ -21,16 +26,24 @@ void Engine::update()
     switch (key.vk)
     {
     case TCODK_UP:
-        y--;
+        if (!map->isWall(player->x, player->y-1)) {
+            player->y--;
+        }
         break;
     case TCODK_DOWN:
-        y++;
+        if (!map->isWall(player->x, player->y+1)) {
+            player->y++;
+        }
         break;
     case TCODK_LEFT:
-        x--;
+        if (!map->isWall(player->x-1, player->y)) {
+            player->x--;
+        }
         break;
     case TCODK_RIGHT:
-        x++;
+        if (!map->isWall(player->x+1, player->y)) {
+            player->x++;
+        }
         break;
     default:
         break;
@@ -51,9 +64,13 @@ void Engine::render()
 
     TCODConsole::root->printf(10, 10, "Hello MetalRL");
     TCODConsole::root->printf(10, 11, "Arrow keys to move...");
-    TCODConsole::root->putChar(x, y, '@');
 
+    map->render();
 
+    for (auto& actor : actors)
+    {
+        actor->render();
+    }
 
     TCODConsole::flush();
 }

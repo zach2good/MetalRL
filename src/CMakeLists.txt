@@ -6,7 +6,7 @@ set(SOURCES
 
 set(RESOURCES
         ${CMAKE_SOURCE_DIR}/res/terminal.png
-        ${CMAKE_SOURCE_DIR}/res/version.h)
+        ${CMAKE_SOURCE_DIR}/res/version.h Actor.cpp Actor.h Map.cpp Map.h)
 
 add_executable(MetalRL MACOSX_BUNDLE ${SOURCES} ${RESOURCES})
 
