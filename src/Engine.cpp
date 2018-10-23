@@ -17,7 +17,10 @@ Engine::Engine()
     map = std::make_shared<Map>(100, 60);
 }
 
-Engine::~Engine() = default;
+Engine::~Engine()
+{
+    actors.clearAndDelete();
+}
 
 void Engine::update()
 {
