@@ -10,6 +10,8 @@ public:
     void update();
     void render();
 
+    inline bool isWindowClosed() { return TCODConsole::isWindowClosed(); }
+
 private:
     int x;
     int y;

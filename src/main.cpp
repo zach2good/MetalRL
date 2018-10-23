@@ -3,7 +3,7 @@
 int main()
 {
     Engine engine;
-    while (!TCODConsole::isWindowClosed())
+    while (!engine.isWindowClosed())
     {
         engine.update();
         engine.render();
