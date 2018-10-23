@@ -1,5 +1,5 @@
 #include "Engine.h"
-#include "Version.h"
+#include "version.h"
 
 Engine::Engine()
 {
@@ -45,4 +45,5 @@ void Engine::render()
     TCODConsole::root->printf(0, 1, "GIT_COMMIT_HASH: " GIT_COMMIT_HASH);
     TCODConsole::root->printf(0, 2, "GIT_DATE: " GIT_DATE);
     TCODConsole::root->printf(0, 3, "GIT_COMMIT_SUBJECT: " GIT_COMMIT_SUBJECT);
+    TCODConsole::root->printf(0, 4, "BUILD_DATE: " BUILD_DATE);
 }

@@ -4,7 +4,6 @@ set(CMAKE_CXX_STANDARD 17)
 
 # cmake modules
 set(CMAKE_MODULE_PATH ${CMAKE_SOURCE_DIR}/cmake)
-include(GitInformation)
 
 # when building, put the executable in the root directory
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})

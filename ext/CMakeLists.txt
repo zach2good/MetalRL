@@ -6,6 +6,7 @@ find_package(ZLIB  REQUIRED)
 # ============== SDL2 ===================
 set(SDL_SHARED OFF)
 add_subdirectory(SDL2)
+set(SDL2_INCLUDE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/SDL2/include)
 
 # =======================================
 # ============== vendor =================
