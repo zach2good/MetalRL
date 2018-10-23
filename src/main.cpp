@@ -7,7 +7,6 @@ int main()
     {
         engine.update();
         engine.render();
-        TCODConsole::flush();
     }
     return 0;
 }
