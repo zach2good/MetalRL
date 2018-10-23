@@ -1,8 +1,10 @@
 #include "Engine.h"
 
-int main() {
+int main()
+{
     Engine engine;
-    while ( !TCODConsole::isWindowClosed() ) {
+    while (!TCODConsole::isWindowClosed())
+    {
         engine.update();
         engine.render();
         TCODConsole::flush();

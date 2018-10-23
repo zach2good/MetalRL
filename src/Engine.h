@@ -2,8 +2,9 @@
 
 #include "common.h"
 
-class Engine {
-public :
+class Engine
+{
+public:
     Engine();
     ~Engine();
     void update();
