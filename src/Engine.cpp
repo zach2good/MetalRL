@@ -12,14 +12,14 @@ Engine::Engine()
 
     TCODConsole::initRoot(100, 60, "MetalRL", false);
     player = std::make_shared<Actor>(15, 15, '@', TCODColor::yellow);
-    actors.push(player);
+    actors.push_back(player);
 
     map = std::make_shared<Map>(100, 60);
 }
 
 Engine::~Engine()
 {
-    actors.clearAndDelete();
+
 }
 
 void Engine::update()

@@ -16,7 +16,7 @@ public:
     inline bool isWindowClosed() { return TCODConsole::isWindowClosed(); }
 
 private:
-    TCODList<std::shared_ptr<Actor>> actors;
+    std::vector<std::shared_ptr<Actor>> actors;
     std::shared_ptr<Actor> player;
     std::shared_ptr<Map> map;
 };
