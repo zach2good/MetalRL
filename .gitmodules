@@ -1,0 +1,3 @@
+[submodule "ext/libtcod"]
+	path = ext/libtcod
+	url = https://github.com/libtcod/libtcod.git
