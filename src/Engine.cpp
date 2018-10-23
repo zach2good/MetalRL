@@ -1,8 +1,12 @@
 #include "Engine.h"
 #include "version.h"
+#include "SDL.h"
 
 Engine::Engine()
 {
+    // Force shut-off SDL Logging
+    SDL_LogSetOutputFunction([](void *, int, SDL_LogPriority,const char*){}, nullptr);
+
     TCODConsole::initRoot(100, 60, "MetalRL", false);
     x = 15;
     y = 15;
