@@ -1,7 +1,11 @@
 # Find required libraries
-find_package(SDL2 REQUIRED)
 find_package(X11  REQUIRED)
 find_package(ZLIB  REQUIRED)
+
+# =======================================
+# ============== SDL2 ===================
+set(SDL_SHARED OFF)
+add_subdirectory(SDL2)
 
 # =======================================
 # ============== vendor =================
@@ -48,7 +52,7 @@ target_link_libraries(tcod
         utf8proc
         lodepng
         stb
-        ${SDL2_LIBRARY}
+        SDL2
         ${X11_LIBRARIES}
         ${ZLIB_LIBRARIES})
 
@@ -80,7 +84,7 @@ target_link_libraries(tcodxx
         utf8proc
         lodepng
         stb
-        ${SDL2_LIBRARY}
+        SDL2
         ${X11_LIBRARIES}
         ${ZLIB_LIBRARIES})
 

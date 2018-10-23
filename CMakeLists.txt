@@ -13,6 +13,3 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 add_subdirectory(${CMAKE_SOURCE_DIR}/ext)
 
 add_subdirectory(${CMAKE_SOURCE_DIR}/src)
-
-# prepare files
-file(COPY ${CMAKE_SOURCE_DIR}/res/ DESTINATION ${CMAKE_BINARY_DIR})
