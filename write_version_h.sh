@@ -3,6 +3,8 @@
 TARGET_FILE="$1"
 TARGET_DIR=`dirname ${TARGET_FILE}`
 
+git update-index --skip-worktree ${TARGET_FILE}
+
 GIT_BRANCH=`git rev-parse --abbrev-ref HEAD`
 GIT_COMMIT_HASH=`git log -1 --format=%h`
 GIT_DATE=`git log -1 --format=%ad --date=local`
