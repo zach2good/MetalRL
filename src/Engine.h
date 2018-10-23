@@ -9,4 +9,8 @@ public:
     ~Engine();
     void update();
     void render();
+
+private:
+    int x;
+    int y;
 };
