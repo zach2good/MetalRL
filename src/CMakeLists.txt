@@ -12,13 +12,7 @@ target_link_libraries(MetalRL PUBLIC json BearLibTerminal)
 target_include_directories(MetalRL PUBLIC
         ${CMAKE_SOURCE_DIR}/res/
         ${CMAKE_SOURCE_DIR}/src/
-        ${BearLibTerminal_IncludeDir}
-        )
-
-set_target_properties(MetalRL PROPERTIES
-        MACOSX_BUNDLE TRUE
-        MACOSX_FRAMEWORK_IDENTIFIER org.cmake.ExecutableTarget
-        RESOURCE "${RESOURCES}"
+        ${CMAKE_SOURCE_DIR}/ext/BearLibTerminal/Terminal/Include/C/
         )
 
 add_custom_target(WriteVersionInformation

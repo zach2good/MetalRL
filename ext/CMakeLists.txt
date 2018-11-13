@@ -15,4 +15,3 @@ target_include_directories(json INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/ECS/)
 # =======================================
 # =========== BearLibTerminal ===========
 add_subdirectory(BearLibTerminal/Terminal)
-set(BearLibTerminal_IncludeDir BearLibTerminal/Terminal/Include/C)
