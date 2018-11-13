@@ -1,0 +1,37 @@
+{
+  "actors" : {
+    "player" : {
+      "ch" : "@",
+      "col" : "white"
+    },
+    "goblin" : {
+      "ch" : "g",
+      "col" : "green"
+    },
+    "kobold" : {
+      "ch" : "k",
+      "col" : "red"
+    },
+    "hobgoblin" : {
+      "ch" : "H",
+      "col" : "hobgoblin"
+    }
+  },
+  "items" : {
+    "sword" : {
+
+    },
+    "shield" : {
+
+    },
+    "bow" : {
+
+    },
+    "arrow" : {
+
+    },
+    "potion" : {
+
+    }
+  }
+}

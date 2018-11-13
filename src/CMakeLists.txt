@@ -1,17 +1,19 @@
 set(SOURCES
-        main.cpp
-        common.h
-        Engine.cpp
-        Engine.h)
+        ${CMAKE_SOURCE_DIR}/src/main.cpp
+        ${CMAKE_SOURCE_DIR}/src/Engine.cpp)
 
 set(RESOURCES
-        ${CMAKE_SOURCE_DIR}/res/terminal.png
-        ${CMAKE_SOURCE_DIR}/res/version.h Actor.cpp Actor.h Map.cpp Map.h)
+        ${CMAKE_SOURCE_DIR}/res/version.h)
+
 
 add_executable(MetalRL MACOSX_BUNDLE ${SOURCES} ${RESOURCES})
 
-target_link_libraries(MetalRL PUBLIC tcod tcodxx)
-target_include_directories(MetalRL PUBLIC ${CMAKE_SOURCE_DIR}/res/)
+target_link_libraries(MetalRL PUBLIC json BearLibTerminal)
+target_include_directories(MetalRL PUBLIC
+        ${CMAKE_SOURCE_DIR}/res/
+        ${CMAKE_SOURCE_DIR}/src/
+        ${BearLibTerminal_IncludeDir}
+        )
 
 set_target_properties(MetalRL PROPERTIES
         MACOSX_BUNDLE TRUE

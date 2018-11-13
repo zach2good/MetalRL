@@ -3,6 +3,16 @@ find_package(X11  REQUIRED)
 find_package(ZLIB  REQUIRED)
 
 # =======================================
+# ============== json ===================
+add_library(json INTERFACE)
+target_include_directories(json INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/json/)
+
+# =======================================
+# ============== json ===================
+add_library(ecs INTERFACE)
+target_include_directories(json INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/ECS/)
+
+# =======================================
 # ============== SDL2 ===================
 set(SDL_SHARED OFF)
 add_subdirectory(SDL2)
@@ -37,6 +47,11 @@ add_library(stb STATIC ${CMAKE_CURRENT_SOURCE_DIR}/libtcod/src/vendor/stb.c)
 target_include_directories(stb
         PUBLIC
         ${CMAKE_CURRENT_SOURCE_DIR}/libtcod/src/vendor/)
+
+# =======================================
+# =========== BearLibTerminal ===========
+add_subdirectory(BearLibTerminal/Terminal)
+set(BearLibTerminal_IncludeDir BearLibTerminal/Terminal/Include/C)
 
 # =======================================
 # ============== libtcod ================
@@ -86,6 +101,7 @@ target_link_libraries(tcodxx
         lodepng
         stb
         SDL2
+        ecs
         ${X11_LIBRARIES}
         ${ZLIB_LIBRARIES})
 

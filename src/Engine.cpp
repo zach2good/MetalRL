@@ -1,79 +1,43 @@
 #include "Engine.h"
-
 #include "version.h"
-#include "SDL.h"
-#include "Actor.h"
-#include "Map.h"
+
+constexpr int ScreenWidth = 80;
+constexpr int ScreenHeight = 50;
 
 Engine::Engine()
 {
-    // Force shut-off SDL Logging
-    SDL_LogSetOutputFunction([](void *, int, SDL_LogPriority, const char*){}, nullptr);
+    terminal_open();
 
-    TCODConsole::initRoot(100, 60, "MetalRL", false);
-    player = std::make_shared<Actor>(15, 15, '@', TCODColor::yellow);
-    actors.push_back(player);
-
-    map = std::make_shared<Map>(100, 60);
+    // Terminal settings
+    terminal_set("window: title='Rogue River: Obol of Charon', resizeable=false, minimum-size=80x50");
+    //terminal_set("font: graphics/VeraMono.ttf, size=8x16");
+    terminal_set("input.filter={keyboard, mouse+}, precise-mouse=true");
+    terminal_composition(TK_ON);
+    terminal_bkcolor("black");
 }
 
 Engine::~Engine()
 {
-
+    terminal_close();
 }
 
-void Engine::update()
+void Engine::step()
 {
-    TCOD_key_t key;
-    TCODSystem::checkForEvent(TCOD_EVENT_KEY_PRESS, &key, nullptr);
-    switch (key.vk)
+    // Handle Input
+    int key = terminal_read();
+    if (key == TK_ESCAPE || key == TK_CLOSE)
     {
-    case TCODK_UP:
-        if (!map->isWall(player->x, player->y-1)) {
-            player->y--;
-        }
-        break;
-    case TCODK_DOWN:
-        if (!map->isWall(player->x, player->y+1)) {
-            player->y++;
-        }
-        break;
-    case TCODK_LEFT:
-        if (!map->isWall(player->x-1, player->y)) {
-            player->x--;
-        }
-        break;
-    case TCODK_RIGHT:
-        if (!map->isWall(player->x+1, player->y)) {
-            player->x++;
-        }
-        break;
-    default:
-        break;
+        closeRequested = true;
     }
 }
 
-void Engine::render()
+void Engine::render() const
 {
-    TCODConsole::root->clear();
+    terminal_clear();
 
-#ifndef NDEBUG // Cmake is strange and only defines NDEBUG
-    TCODConsole::root->printf(0, 0, "GIT_BRANCH: " GIT_BRANCH);
-    TCODConsole::root->printf(0, 1, "GIT_COMMIT_HASH: " GIT_COMMIT_HASH);
-    TCODConsole::root->printf(0, 2, "GIT_DATE: " GIT_DATE);
-    TCODConsole::root->printf(0, 3, "GIT_COMMIT_SUBJECT: " GIT_COMMIT_SUBJECT);
-    TCODConsole::root->printf(0, 4, "BUILD_DATE: " BUILD_DATE);
-#endif
 
-    TCODConsole::root->printf(10, 10, "Hello MetalRL");
-    TCODConsole::root->printf(10, 11, "Arrow keys to move...");
+    terminal_printf(2, 23, "[color=orange]ESC.[/color] Exit");
 
-    map->render();
 
-    for (auto& actor : actors)
-    {
-        actor->render();
-    }
-
-    TCODConsole::flush();
+    terminal_refresh();
 }
