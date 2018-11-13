@@ -1,9 +1,3 @@
-[submodule "ext/libtcod"]
-	path = ext/libtcod
-	url = https://github.com/libtcod/libtcod.git
-[submodule "ext/SDL2"]
-	path = ext/SDL2
-	url = https://github.com/spurious/SDL-mirror.git
 [submodule "ext/BearLibTerminal"]
 	path = ext/BearLibTerminal
 	url = git@github.com:zach2good/BearLibTerminal.git
