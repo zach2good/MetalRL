@@ -1,15 +1,14 @@
-#include "BearLibTerminal.h"
+#include "Engine.h"
 
 int main()
 {
-    terminal_open();
+    Engine engine;
 
-    // Printing text
-    terminal_print(1, 1, "Hello, world!");
-    terminal_refresh();
+    while (engine.isRunning())
+    {
+        engine.step();
+        engine.render();
+    }
 
-    // Wait until user close the window
-    while (terminal_read() != TK_CLOSE);
-
-    terminal_close();
+    return 0;
 }
