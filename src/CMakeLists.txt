@@ -1,10 +1,12 @@
 set(SOURCES
         ${CMAKE_SOURCE_DIR}/src/main.cpp
-        ${CMAKE_SOURCE_DIR}/src/Engine.cpp)
+        ${CMAKE_SOURCE_DIR}/src/Engine.cpp
+        ${CMAKE_SOURCE_DIR}/src/Engine.h
+        Map.cpp
+        Map.h)
 
 set(RESOURCES
         ${CMAKE_SOURCE_DIR}/res/version.h)
-
 
 add_executable(MetalRL MACOSX_BUNDLE ${SOURCES} ${RESOURCES})
 

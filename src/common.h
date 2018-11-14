@@ -9,15 +9,11 @@
 #include <unordered_map>
 #include <vector>
 #include <list>
+#include <random>
 
-#if defined(__APPLE__)
-#include <mach-o/dyld.h>
-#include <sys/param.h>
-#include <unistd.h>
-#endif
+#include <cmath>
 
 #include "BearLibTerminal.h"
-TERMINAL_TAKE_CARE_OF_WINMAIN
 
 class Actor;
 
@@ -27,3 +23,25 @@ template<typename T> std::string to_string(const T& value)
     ss << value;
     return ss.str();
 }
+
+enum dice
+{
+    d4 = 4,
+    d6 = 6,
+    d8 = 8,
+    d10 = 10,
+    d12 = 12,
+    d20 = 20,
+    d100 = 100
+};
+
+struct roller
+{
+    int roll(dice d)
+    {
+        std::mt19937 rng;
+        rng.seed(std::random_device()());
+        std::uniform_int_distribution<std::mt19937::result_type> roll(1, d);
+        return roll(rng);
+    }
+};

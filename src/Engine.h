@@ -1,62 +1,34 @@
 #pragma once
 
 #include "common.h"
+#include "Map.h"
 
-struct Tile
+struct Log
 {
-    bool isWall = false;
-};
-
-struct Map
-{
-    Map(int w, int h)
-    : width(w)
-    , height(h)
-    , tiles(w * h)
-    {
-        for (int j = 0; j < height; ++j) {
-            for (int i = 0; i < width; ++i) {
-                if (i == 0 || i == width -1 || j == 0 || j == height - 1) tiles[i + (j * height)].isWall = true;
-            }
-        }
-    }
-
     void render() const
     {
-        for (int j = 0; j < height; ++j) {
-            for (int i = 0; i < width; ++i) {
-                Tile tile = tiles[i + (j * height)];
-                if (tile.isWall)
-                {
-                    terminal_color(color_from_argb(100, 200, 200, 0));
-                    terminal_put(i, j, 0x2588);
-                }
-                else
-                {
-                    terminal_color(color_from_argb(80, 200, 200, 100));
-                    terminal_put(i, j, '.');
-                }
-
-            }
+        int counter = 1;
+        while (counter < messages.size())
+        {
+            terminal_color(color_from_argb(255/counter, 255, 255, 255));
+            terminal_print(15, 30 - counter, messages[(messages.size() - counter)].data());
+            counter++;
         }
     }
-
-    bool isWall(int x, int y) const
-    {
-        return tiles[x + (y * height)].isWall;
-    }
-
-    int width;
-    int height;
-    std::vector<Tile> tiles;
+    std::vector<std::string> messages;
 };
 
 struct Actor
 {
-    Actor(int x, int y, int ch, const char* col)
-    : x(x), y(y), ch(ch), col(col), ac(10), toHit(3)
+    Actor(const char* name, int x, int y, int ch, const char* col)
+    : name(name), x(x), y(y), ch(ch), col(col)
     {
 
+    }
+
+    void setLog(Log* l)
+    {
+        log = l;
     }
 
     void render() const
@@ -67,41 +39,64 @@ struct Actor
 
     void attack(Actor& other)
     {
+        std::string out;
+        out = name + "(" + to_string(hp) + "hp): ";
+
         // roll to hit
-        int toHitResult = 10 + toHit;
-        if (!(toHitResult >= other.ac)) return;
+        int roll = r.roll(dice::d20);
+        int toHitResult = roll + toHit;
+        out += to_string(toHitResult) + " to hit. ";
+        if (toHitResult >= other.ac)
+        {
+            // roll damage;
+            int damageRoll = r.roll(dice);
 
-        // roll damage;
-        int damageRoll = 4;
+            if (roll == 20) damageRoll *= 2;
 
-        other.hp -= damageRoll;
+            other.hp -= damageRoll;
+            out += to_string(damageRoll) + " damage. ";
 
-        std::cout << toHitResult << " to hit, for " << damageRoll << " damage. Target's hp: " << other.hp << std::endl;
+            if (other.hp <= 0)
+            {
+                other.col = "red";
+                other.alive = false;
+                out += other.name + " has died!";
+            }
+        }
+        log->messages.push_back(out);
     }
 
+    int distanceTo(Actor& other)
+    {
+        auto _x = pow(x - other.x, 2);
+        auto _y = pow(y - other.y, 2);
+        return static_cast<int>(sqrt(_x + _y));
+    }
+
+    bool inRange(Actor& other)
+    {
+        return distanceTo(other) <= range;
+    }
+
+    std::string name;
     int x;
     int y;
     int ch;
     const char* col;
 
     // battle stats
-    int ac;
-    int toHit;
+    int ac = 10;
+    int toHit = 0;
+    dice dice = dice::d4;
     int hp = 10;
+    int range = 1;
+    bool alive = true;
+
+    roller r;
+
+    Log* log;
 };
 
-struct Log
-{
-    void render() const
-    {
-        int counter = (messages.size() < 7) ? messages.size() : 7;
-        for (int i = 1; i < counter; ++i) {
-            terminal_color(color_from_argb(255/i, 255, 255, 255));
-            terminal_print(15, 49 - i, messages[(messages.size() - 1 - i)].data());
-        }
-    }
-    std::vector<std::string> messages;
-};
 
 class Engine
 {
@@ -117,13 +112,8 @@ public:
 private:
     bool running = true;
 
-    Actor player;
-    Actor goblin;
+    std::shared_ptr<Actor> player;
+    std::vector<Actor> actors;
     Map map;
     Log log;
-
-    bool isGoblin(int x, int y)
-    {
-        return x == goblin.x && y == goblin.y;
-    }
 };
