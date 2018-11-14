@@ -2,8 +2,12 @@ set(SOURCES
         ${CMAKE_SOURCE_DIR}/src/main.cpp
         ${CMAKE_SOURCE_DIR}/src/Engine.cpp
         ${CMAKE_SOURCE_DIR}/src/Engine.h
-        Map.cpp
-        Map.h)
+        ${CMAKE_SOURCE_DIR}/src/Map.cpp
+        ${CMAKE_SOURCE_DIR}/src/Map.h
+        ${CMAKE_SOURCE_DIR}/src/Log.cpp
+        ${CMAKE_SOURCE_DIR}/src/Log.h
+        ${CMAKE_SOURCE_DIR}/src/Actor.cpp
+        ${CMAKE_SOURCE_DIR}/src/Actor.h)
 
 set(RESOURCES
         ${CMAKE_SOURCE_DIR}/res/version.h)
