@@ -3,6 +3,12 @@
 #include "common.h"
 #include "BearLibTerminal.h"
 
+enum TileFeature
+{
+    None,
+    Wall,
+    Hole
+};
 class Map
 {
 public:
@@ -10,12 +16,19 @@ public:
 
     void render() const;
 
-    bool isWall(int x, int y) const;
+    bool isWall(int x, int y);
 
 private:
     struct Tile
     {
-        bool isWall = false;
+        TileFeature feature = TileFeature::None;
+
+        std::vector<GameObject> objects;
+
+        bool isWall()
+        {
+            return feature == TileFeature::Wall;
+        }
     };
 
     int width;

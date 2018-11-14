@@ -45,3 +45,15 @@ struct roller
         return roll(rng);
     }
 };
+
+class GameObject
+{
+public:
+    GameObject(int x, int y, int ch, const char* color)
+    : x(x), y(y), ch(ch), color(color) {}
+
+    int x;
+    int y;
+    int ch;
+    const char* color;
+};

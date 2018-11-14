@@ -7,11 +7,11 @@
 #include "common.h"
 #include "Log.h"
 
-class Actor
+class Actor : public GameObject
 {
 public:
-    Actor(const char* name, int x, int y, int ch, const char* col)
-    : name(name), x(x), y(y), ch(ch), col(col)
+    Actor(const char* name, int x, int y, int ch, const char* color)
+    : name(name), GameObject(x, y, ch, color)
     {
 
     }
@@ -23,7 +23,7 @@ public:
 
     void render() const
     {
-        terminal_color(col);
+        terminal_color(color);
         terminal_put(x, y, ch);
     }
 
@@ -48,7 +48,7 @@ public:
 
             if (other.hp <= 0)
             {
-                other.col = "red";
+                other.color = "red";
                 other.alive = false;
                 out += other.name + " has died!";
             }
@@ -69,12 +69,6 @@ public:
     }
 
     std::string name;
-    int x;
-    int y;
-    int ch;
-    const char* col;
-
-    // battle stats
     int ac = 10;
     int toHit = 0;
     dice dice = dice::d4;
