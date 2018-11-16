@@ -8,19 +8,20 @@ enum TileFeature
     None,
     Wall
 };
+
 class Map
 {
 public:
     Map(int w, int h);
 
+    void step(std::shared_ptr<Log> log);
     void render() const;
 
     bool isWall(int x, int y);
-    bool canInteract(int x, int y);
-
-    Actor& getInteractable(int x, int y)
+    bool isCreature(int x, int y);
+    std::shared_ptr<Actor> getCreature(int x, int y)
     {
-        return tiles[x + (y * height)].interactables[0];
+        return tiles[x + (y * height)].creature;
     }
 
 private:
@@ -31,14 +32,14 @@ private:
             return feature == TileFeature::Wall;
         }
 
-        bool canInteract()
+        bool isCreature()
         {
-            return !interactables.empty();
+            return creature == nullptr;
         }
 
         TileFeature feature = TileFeature::None;
-
-        std::vector<Actor> interactables;
+        std::shared_ptr<Actor> creature = nullptr;
+        std::shared_ptr<GameObject> object = nullptr;
     };
 
     int width;

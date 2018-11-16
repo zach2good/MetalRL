@@ -16,53 +16,50 @@ public:
 
     }
 
-    void setLog(Log* l)
-    {
-        log = l;
-    }
-
-    void step() override
+    void step(std::shared_ptr<Log> log) override
     {
 
     }
 
-    void attack(Actor& other)
+    void attack(std::shared_ptr<Actor> other, std::shared_ptr<Log> log)
     {
         std::string out;
-        out = name + "(" + to_string(hp) + "hp): ";
+        out += name + "(" + to_string(hp) + "hp): ";
+
+        bool hit = false;
 
         // roll to hit
         int roll = r.roll(dice::d20);
         int toHitResult = roll + toHit;
         out += to_string(toHitResult) + " to hit. ";
-        if (toHitResult >= other.ac)
+        if (toHitResult >= other->ac)
         {
+            hit = true;
             // roll damage;
             int damageRoll = r.roll(dice);
 
             if (roll == 20) damageRoll *= 2;
 
-            other.hp -= damageRoll;
+            other->hp -= damageRoll;
             out += to_string(damageRoll) + " damage. ";
 
-            if (other.hp <= 0)
+            if (other->hp <= 0)
             {
-                other.color = "red";
-                other.alive = false;
-                out += other.name + " has died!";
+                other->color = "red";
+                other->alive = false;
             }
         }
-        log->messages.push_back(Message(out.data()));
+        hit ? log->alert(out) : log->message(out);
     }
 
-    int distanceTo(Actor& other)
+    int distanceTo(std::shared_ptr<Actor> other)
     {
-        auto _x = pow(x - other.x, 2);
-        auto _y = pow(y - other.y, 2);
+        auto _x = pow(x - other->x, 2);
+        auto _y = pow(y - other->y, 2);
         return static_cast<int>(sqrt(_x + _y));
     }
 
-    bool inRange(Actor& other)
+    bool inRange(std::shared_ptr<Actor> other)
     {
         return distanceTo(other) <= range;
     }
@@ -76,8 +73,6 @@ public:
     bool alive = true;
 
     roller r;
-
-    Log* log;
 };
 
 

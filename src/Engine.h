@@ -21,6 +21,15 @@ private:
 
     std::shared_ptr<Actor> player;
     std::vector<Actor> actors;
-    Map map;
-    Log log;
+    std::shared_ptr<Map> map;
+    std::shared_ptr<Log> log;
+
+    enum State
+    {
+        Freeroam,
+        Battle_PlayerTurn,
+        Battle_EnemyTurn,
+        PlayerDead
+    };
+    State state;
 };

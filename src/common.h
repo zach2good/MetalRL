@@ -15,6 +15,7 @@
 
 #include "BearLibTerminal.h"
 
+class Log;
 class Actor;
 
 template<typename T> std::string to_string(const T& value)
@@ -58,7 +59,7 @@ public:
         terminal_put(x, y, ch);
     }
 
-    virtual void step() = 0;
+    virtual void step(std::shared_ptr<Log> log) = 0;
 
     int x;
     int y;
