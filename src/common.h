@@ -52,6 +52,14 @@ public:
     GameObject(int x, int y, int ch, const char* color)
     : x(x), y(y), ch(ch), color(color) {}
 
+    void render() const
+    {
+        terminal_color(color);
+        terminal_put(x, y, ch);
+    }
+
+    virtual void step() = 0;
+
     int x;
     int y;
     int ch;

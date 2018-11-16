@@ -16,10 +16,6 @@ Engine::Engine()
 
     player = std::make_shared<Actor>("Player", 10, 10, '@', "white");
     player->setLog(&log);
-
-    Actor goblin = Actor("Goblin", 20, 10, 'g', "green");
-    goblin.log = &log;
-    actors.push_back(goblin);
 }
 
 Engine::~Engine()
@@ -43,6 +39,11 @@ void Engine::step()
             }
             case TK_UP: {
                 keyPressed = true;
+                if(map.canInteract(player->x, player->y - 1))
+                {
+                    auto act = map.getInteractable(player->x, player->y - 1);
+                    player->attack(act);
+                }
                 if (map.isWall(player->x, player->y - 1))
                 {
                     log.messages.push_back("You walk into a wall!");

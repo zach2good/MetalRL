@@ -1,10 +1,12 @@
 #include "Map.h"
+#include "Actor.h"
 
 Map::Map(int w, int h)
         : width(w)
         , height(h)
         , tiles(w * h)
 {
+    // Walls
     for (int j = 0; j < height; ++j) {
         for (int i = 0; i < width; ++i) {
             if (i == 0 || i == width -1 || j == 0 || j == height - 1)
@@ -13,6 +15,9 @@ Map::Map(int w, int h)
             }
         }
     }
+
+    // Gerblin
+    tiles[20 + (10 * height)].interactables.push_back(Actor("Goblin", 20, 10, 'g', "green"));
 }
 
 void Map::render() const
@@ -33,9 +38,22 @@ void Map::render() const
 
         }
     }
+
+    for(auto& tile : tiles)
+    {
+        for(auto& in : tile.interactables)
+        {
+            in.render();
+        }
+    }
 }
 
 bool Map::isWall(int x, int y)
 {
     return tiles[x + (y * height)].isWall();
+}
+
+bool Map::canInteract(int x, int y)
+{
+    return tiles[x + (y * height)].canInteract();
 }

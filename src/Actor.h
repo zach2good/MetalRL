@@ -21,10 +21,9 @@ public:
         log = l;
     }
 
-    void render() const
+    void step() override
     {
-        terminal_color(color);
-        terminal_put(x, y, ch);
+
     }
 
     void attack(Actor& other)
@@ -53,7 +52,7 @@ public:
                 out += other.name + " has died!";
             }
         }
-        log->messages.push_back(out);
+        log->messages.push_back(Message(out.data()));
     }
 
     int distanceTo(Actor& other)
